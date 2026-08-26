@@ -1,39 +1,62 @@
-import heroWedding from "@/assets/hero-wedding.jpg";
-import venueGrand from "@/assets/venue-grand.jpg";
+// Real Jawhar Venue Assets
+import jawharGrandMainHall from "@/assets/venues/jawhar-grand/jawhar-grand-main-hall.png";
+import jawharGrandFacade from "@/assets/venues/jawhar-grand/jawhar-grand-facade.png";
+import jawharGrandStage from "@/assets/venues/jawhar-grand/jawhar-grand-stage-celebration.png";
+import jawharGrandFoyer from "@/assets/venues/jawhar-grand/jawhar-grand-foyer-dining.png";
+import jawharGrandBuffet from "@/assets/venues/jawhar-grand/jawhar-grand-dining-buffet.png";
+
+// Additional venue asset placeholders
 import venueElite from "@/assets/venue-elite.jpg";
 import venuePalace from "@/assets/venue-palace.jpg";
 import venueGarden from "@/assets/venue-garden.jpg";
 import venueConvention from "@/assets/venue-convention.jpg";
-import galleryDecor from "@/assets/gallery-decor.jpg";
-import galleryCatering from "@/assets/gallery-catering.jpg";
-import galleryCouple from "@/assets/gallery-couple.jpg";
 
 export const WHATSAPP_NUMBER = "919876543210";
 export const PHONE_DISPLAY = "+91 98765 43210";
 
-export interface GalleryImage {
+export interface VenueGalleryItem {
+  id: string;
   src: string;
-  caption: string;
+  alt: string;
   category: "Venues" | "Weddings" | "Decor" | "Dining";
+  caption: string;
+}
+
+export type GalleryImage = VenueGalleryItem;
+
+export interface VenueVideoItem {
+  src: string;
+  embedUrl?: string;
+  poster?: string;
+  title: string;
+  description?: string;
 }
 
 export interface Venue {
-  slug: string;
+  id: string;
   name: string;
+  slug: string;
   tagline: string;
   location: string;
   capacity: string;
   area: string;
   description: string;
   story: string;
-  image: string;
+  heroImage: string;
+  heroVideo?: string;
+  thumbnailImage: string;
+  image: string; // for backward compatibility with existing components
   facilities: string[];
   events: string[];
-  gallery: GalleryImage[];
+  gallery: VenueGalleryItem[];
+  videos?: VenueVideoItem[];
   mapQuery: string;
 }
 
-export const heroImage = heroWedding;
+// Cinematic Hero image using the real Jawhar Grand main chandelier hall
+export const heroImage = jawharGrandMainHall;
+// Homepage hero background video
+export const heroVideo = "/videos/jawhar-homepage-hero.mp4";
 
 export const EVENT_TYPES = [
   { name: "Wedding", description: "Sacred ceremonies framed by grand mandaps and timeless rituals." },
@@ -57,44 +80,77 @@ export const SERVICES = [
   { name: "Event Coordination", description: "A dedicated planner orchestrating every detail, end to end." },
 ] as const;
 
-const sharedDetails: GalleryImage[] = [
-  { src: galleryDecor, caption: "Ivory roses and candlelit tablescapes", category: "Decor" },
-  { src: galleryCatering, caption: "A royal feast by our master chefs", category: "Dining" },
-  { src: galleryCouple, caption: "Moments that become heirlooms", category: "Weddings" },
-  { src: heroWedding, caption: "The estate at golden hour", category: "Venues" },
+// Real Jawhar Grand Gallery Items
+export const jawharGrandGallery: VenueGalleryItem[] = [
+  {
+    id: "jg-main-hall",
+    src: jawharGrandMainHall,
+    alt: "Jawhar Grand main chandelier hall with wedding seating and floral stage",
+    category: "Venues",
+    caption: "Main Ballroom with tiered crystal chandelier and wedding seating",
+  },
+  {
+    id: "jg-facade",
+    src: jawharGrandFacade,
+    alt: "Jawhar Grand MM Tower exterior entrance and covered basement parking",
+    category: "Venues",
+    caption: "MM Tower grand entrance with celebratory welcoming arch",
+  },
+  {
+    id: "jg-stage-decor",
+    src: jawharGrandStage,
+    alt: "Jawhar Grand celebration stage decor with floral backdrop and swing",
+    category: "Decor",
+    caption: "Bespoke celebration stage decor with floral arch and lighting",
+  },
+  {
+    id: "jg-foyer-dining",
+    src: jawharGrandFoyer,
+    alt: "Jawhar Grand welcome foyer with frosted glass entrance and banquet arrangement",
+    category: "Dining",
+    caption: "Air-conditioned banquet foyer and dining reception area",
+  },
+  {
+    id: "jg-buffet-setup",
+    src: jawharGrandBuffet,
+    alt: "Jawhar Grand dining hall with live sweet counters and banquet buffet warmers",
+    category: "Dining",
+    caption: "Live counters and traditional banquet dining arrangement",
+  },
 ];
 
 export const venues: Venue[] = [
   {
+    id: "jawhar-grand",
     slug: "jawhar-grand",
     name: "Jawhar Grand",
     tagline: "The Flagship Ballroom",
-    location: "Nungambakkam, Chennai",
+    location: "MM Tower, Chennai",
     capacity: "1,200 guests",
     area: "28,000 sq.ft",
     description:
-      "Our flagship chandeliered ballroom with soaring ceilings, velvet-draped stages and a regal foyer — the definitive address for grand weddings.",
+      "Our flagship chandeliered ballroom with soaring ceilings, velvet-draped stages and a regal foyer — the definitive address for grand weddings and celebrations.",
     story:
-      "Jawhar Grand began as our family's first promise: that a celebration deserves architecture worthy of its emotion. Beneath a canopy of Austrian crystal chandeliers, generations have exchanged vows, danced their first waltzes and toasted new beginnings. Every cornice, every drape, every note of the grand piano in the foyer exists for a single purpose — to make your day feel like history in the making.",
-    image: venueGrand,
+      "Jawhar Grand at MM Tower began as our family's promise: that a celebration deserves architecture worthy of its emotion. Beneath a canopy of brilliant crystal chandeliers, families gather to celebrate milestone weddings, sangeets, seemantham rituals and banquets. With dedicated reception foyers, central air conditioning, and convenient basement parking, Jawhar Grand sets the standard for memorable hospitality.",
+    heroImage: jawharGrandMainHall,
+    thumbnailImage: jawharGrandFacade,
+    image: jawharGrandMainHall,
     facilities: [
-      "Chandeliered pillar-less ballroom",
-      "Bridal & family suites",
-      "Dedicated mandap stage",
-      "In-house catering kitchens",
-      "Valet parking for 300 cars",
+      "Chandeliered pillar-less grand ballroom",
+      "Air-conditioned banquet and dining foyer",
+      "Dedicated celebratory stage & backdrop lighting",
+      "Live food & traditional buffet counters",
+      "Convenient basement parking facility",
       "Full power backup & climate control",
-      "Green rooms & VIP lounge",
-      "Live streaming infrastructure",
+      "Bridal & family preparation rooms",
+      "Grand covered entryway with steps",
     ],
-    events: ["Wedding", "Reception", "Engagement", "Corporate", "Anniversary"],
-    gallery: [
-      { src: venueGrand, caption: "The grand ballroom set for a wedding", category: "Venues" },
-      ...sharedDetails,
-    ],
-    mapQuery: "Nungambakkam, Chennai",
+    events: ["Wedding", "Reception", "Engagement", "Seemantham", "Birthday", "Corporate", "Anniversary"],
+    gallery: jawharGrandGallery,
+    mapQuery: "Jawhar Grand Party Hall, MM Tower, Chennai",
   },
   {
+    id: "jawhar-elite-ar-tower",
     slug: "jawhar-elite-ar-tower",
     name: "Jawhar Elite AR Tower",
     tagline: "The Skyline Terrace",
@@ -104,7 +160,10 @@ export const venues: Venue[] = [
     description:
       "A glass-crowned tower venue with a sunset rooftop terrace — receptions suspended above the city, glittering beneath the stars.",
     story:
-      "Perched above the city's hum, Jawhar Elite AR Tower was imagined for celebrations that touch the sky. As dusk paints the horizon in amber and rose, the terrace comes alive with a thousand fairy lights. It is where modern romance meets metropolitan glamour — cocktail receptions under open sky, champagne toasts against a glittering skyline, and evenings your guests will recount for years.",
+      "Perched above the city's hum, Jawhar Elite AR Tower was imagined for celebrations that touch the sky. As dusk paints the horizon in amber and rose, the terrace comes alive with ambient lighting. It is where modern romance meets metropolitan glamour — cocktail receptions, champagne toasts against a glittering skyline, and evenings your guests will recount for years.",
+    heroImage: venueElite,
+    heroVideo: "/videos/jawhar-elite-hero.mp4",
+    thumbnailImage: venueElite,
     image: venueElite,
     facilities: [
       "Open-air rooftop terrace",
@@ -118,12 +177,27 @@ export const venues: Venue[] = [
     ],
     events: ["Reception", "Engagement", "Birthday", "Corporate", "Anniversary"],
     gallery: [
-      { src: venueElite, caption: "Twilight receptions above the skyline", category: "Venues" },
-      ...sharedDetails,
+      {
+        id: "elite-1",
+        src: venueElite,
+        alt: "Jawhar Elite AR Tower skyline terrace reception venue",
+        caption: "Twilight receptions above the skyline",
+        category: "Venues",
+      },
+    ],
+    videos: [
+      {
+        src: "https://www.instagram.com/reel/Cz0N4DGv5ii/",
+        embedUrl: "https://www.instagram.com/reel/Cz0N4DGv5ii/embed",
+        poster: venueElite,
+        title: "Celebrations at Jawhar Elite AR Tower",
+        description: "Experience the vibrant ambiance, skyline views, and celebratory moments at Jawhar Elite AR Tower.",
+      },
     ],
     mapQuery: "OMR, Chennai",
   },
   {
+    id: "jawhar-grand-palace",
     slug: "jawhar-grand-palace",
     name: "Jawhar Grand Palace",
     tagline: "The Royal Heritage",
@@ -133,27 +207,36 @@ export const venues: Venue[] = [
     description:
       "A marble-columned palace of gilded staircases and throne-like mandaps — for weddings that deserve nothing less than royalty.",
     story:
-      "Jawhar Grand Palace is our ode to the courts of old — Corinthian marble columns, a sweeping double staircase, and a golden dome that crowns the sacred mandap. Here, jasmine garlands meet antique gold; tradition is not decorated, it is enshrined. For families who dream of a wedding that feels like a royal durbar, the Palace is not a venue. It is an inheritance of grandeur.",
+      "Jawhar Grand Palace is an ode to timeless grandeur — sweeping architecture, majestic pillars, and spacious banquet layouts. Tradition is celebrated in style. For families who dream of a wedding that feels regal and unforgettable, the Palace stands as a monument to celebrated memories.",
+    heroImage: venuePalace,
+    heroVideo: "/videos/jawhar-palace-hero.mp4",
+    thumbnailImage: venuePalace,
     image: venuePalace,
     facilities: [
-      "Gilded royal mandap",
+      "Gilded royal mandap hall",
       "Marble grand staircase entry",
       "Two interconnecting halls",
       "Royal bridal chamber",
       "Traditional kitchen for rituals",
-      "Parking for 500 cars",
+      "Ample vehicle parking",
       "Procession courtyard",
       "Guest accommodation block",
     ],
     events: ["Wedding", "Reception", "Seemantham", "Engagement"],
     gallery: [
-      { src: venuePalace, caption: "The royal mandap beneath the golden dome", category: "Venues" },
-      ...sharedDetails,
+      {
+        id: "palace-1",
+        src: venuePalace,
+        alt: "Jawhar Grand Palace royal wedding hall",
+        caption: "The royal mandap beneath soaring arches",
+        category: "Venues",
+      },
     ],
     mapQuery: "ECR, Chennai",
   },
   {
-    slug: "jawhar-garden-estate",
+    id: "venue-4",
+    slug: "venue-4",
     name: "Jawhar Garden Estate",
     tagline: "The Open-Air Lawn",
     location: "Injambakkam, Chennai",
@@ -162,7 +245,9 @@ export const venues: Venue[] = [
     description:
       "Manicured pastel-green lawns, white pavilions and floral archways — an open-air estate for ceremonies kissed by sea breeze.",
     story:
-      "Some celebrations belong under open sky. The Garden Estate spreads across two and a half acres of velvet lawn, where white pavilions rise between frangipani trees and the sea carries its blessing on the breeze. Morning seemanthams bathed in soft light, evening receptions beneath a canopy of stars — the Estate is nature, composed like poetry.",
+      "Some celebrations belong under open sky. The Garden Estate spreads across two and a half acres of velvet lawn, where white pavilions rise between frangipani trees and the sea carries its blessing on the breeze. Morning seemanthams bathed in soft light, evening receptions beneath a canopy of stars.",
+    heroImage: venueGarden,
+    thumbnailImage: venueGarden,
     image: venueGarden,
     facilities: [
       "2.5-acre landscaped lawns",
@@ -176,13 +261,19 @@ export const venues: Venue[] = [
     ],
     events: ["Wedding", "Seemantham", "Birthday", "Anniversary", "Reception"],
     gallery: [
-      { src: venueGarden, caption: "Pavilions and petals on the great lawn", category: "Venues" },
-      ...sharedDetails,
+      {
+        id: "garden-1",
+        src: venueGarden,
+        alt: "Jawhar Garden Estate open air lawn venue",
+        caption: "Pavilions and petals on the great lawn",
+        category: "Venues",
+      },
     ],
     mapQuery: "Injambakkam, Chennai",
   },
   {
-    slug: "jawhar-convention-centre",
+    id: "venue-5",
+    slug: "venue-5",
     name: "Jawhar Convention Centre",
     tagline: "The Grand Conclave",
     location: "Guindy, Chennai",
@@ -191,7 +282,9 @@ export const venues: Venue[] = [
     description:
       "A sophisticated convention hall of warm wood and brass — conferences, product launches and gala dinners at corporate perfection.",
     story:
-      "The Convention Centre speaks a quieter luxury: warm walnut panelling, sculptural brass lighting, and acoustics tuned to perfection. It is the stage for ideas that matter — keynote summits, product unveilings, award galas — and for families who prefer their celebrations in contemporary, understated elegance. Precision is our hospitality here.",
+      "The Convention Centre speaks a quieter luxury: warm walnut panelling, sculptural brass lighting, and acoustics tuned to perfection. It is the stage for ideas that matter — keynote summits, product unveilings, award galas — and for celebrations in contemporary, understated elegance.",
+    heroImage: venueConvention,
+    thumbnailImage: venueConvention,
     image: venueConvention,
     facilities: [
       "Pillar-less convention hall",
@@ -205,19 +298,26 @@ export const venues: Venue[] = [
     ],
     events: ["Corporate", "Birthday", "Anniversary", "Reception", "Engagement"],
     gallery: [
-      { src: venueConvention, caption: "The conclave hall in banquet style", category: "Venues" },
-      ...sharedDetails,
+      {
+        id: "convention-1",
+        src: venueConvention,
+        alt: "Jawhar Convention Centre banquet and corporate hall",
+        caption: "The conclave hall in banquet style",
+        category: "Venues",
+      },
     ],
     mapQuery: "Guindy, Chennai",
   },
 ];
 
-export const allGalleryImages: GalleryImage[] = venues.flatMap((v) =>
-  v.gallery.map((g) => ({ ...g, caption: `${g.caption} — ${v.name}` }))
-);
+// All Gallery images combining real Jawhar photographs
+export const allGalleryImages: VenueGalleryItem[] = jawharGrandGallery.map((g) => ({
+  ...g,
+  caption: `${g.caption} — Jawhar Grand`,
+}));
 
 export function getVenue(slug: string): Venue | undefined {
-  return venues.find((v) => v.slug === slug);
+  return venues.find((v) => v.slug === slug || (slug === "jawhar-garden-estate" && v.slug === "venue-4") || (slug === "jawhar-convention-centre" && v.slug === "venue-5"));
 }
 
 /** Deterministic pseudo-booked dates for demo availability */

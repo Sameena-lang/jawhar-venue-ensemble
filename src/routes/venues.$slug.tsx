@@ -9,6 +9,9 @@ import {
   Share2,
   CalendarCheck,
   Sparkles,
+  Film,
+  ExternalLink,
+  Play,
 } from "lucide-react";
 import { getVenue, venues, whatsappLink } from "@/data/venues";
 import { Reveal, SectionHeading } from "@/components/Reveal";
@@ -68,17 +71,32 @@ function VenuePage() {
     <main>
       {/* Hero banner */}
       <section className="relative flex min-h-[70svh] items-end overflow-hidden pt-20">
-        <motion.img
-          src={venue.image}
-          alt={`${venue.name} — ${venue.tagline}`}
-          className="absolute inset-0 h-full w-full object-cover"
-          width={1024}
-          height={768}
-          fetchPriority="high"
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
-        />
+        {venue.heroVideo ? (
+          <motion.video
+            src={venue.heroVideo}
+            poster={venue.heroImage || venue.image}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 h-full w-full object-cover"
+            initial={{ scale: 1.08, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+          />
+        ) : (
+          <motion.img
+            src={venue.heroImage || venue.image}
+            alt={`${venue.name} — ${venue.tagline}`}
+            className="absolute inset-0 h-full w-full object-cover"
+            width={1024}
+            height={768}
+            fetchPriority="high"
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-forest-deep/90 via-forest-deep/30 to-forest-deep/40" />
         <div className="container-luxe relative z-10 pb-16">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.9 }}>
@@ -165,6 +183,56 @@ function VenuePage() {
           </div>
         </div>
       </section>
+
+      {/* Video / Reel Showcase */}
+      {venue.videos && venue.videos.length > 0 && (
+        <section className="bg-forest-deep py-20 md:py-28 text-white">
+          <div className="container-luxe">
+            <SectionHeading
+              light
+              eyebrow="Cinematic Film"
+              title="Celebrations in Motion"
+              description={`Experience the ambiance, energy, and elegance of ${venue.name}.`}
+            />
+            <div className="mt-14 mx-auto max-w-3xl">
+              {venue.videos.map((vid, idx) => (
+                <Reveal key={idx} className="overflow-hidden border border-gold/30 bg-forest/60 p-4 md:p-8 backdrop-blur shadow-2xl">
+                  <div className="relative mx-auto aspect-[9/16] max-w-sm overflow-hidden bg-black/50 shadow-inner border border-white/10">
+                    {vid.embedUrl ? (
+                      <iframe
+                        src={vid.embedUrl}
+                        title={vid.title}
+                        className="h-full w-full border-0"
+                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                        allowFullScreen
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center p-6 text-center text-white/70">
+                        <Play className="h-12 w-12 text-gold opacity-80" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="mt-6 text-center">
+                    <h3 className="font-display text-xl font-medium text-white">{vid.title}</h3>
+                    {vid.description && (
+                      <p className="mt-2 text-sm text-white/70 max-w-md mx-auto">{vid.description}</p>
+                    )}
+                    <a
+                      href={vid.src}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-5 inline-flex items-center gap-2 btn-gold !py-2.5 !px-6 text-xs uppercase tracking-widest"
+                    >
+                      <ExternalLink className="h-3.5 w-3.5" /> Watch on Instagram
+                    </a>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Events & services */}
       <section className="py-20 md:py-28">

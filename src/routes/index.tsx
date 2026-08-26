@@ -20,6 +20,7 @@ import {
 import {
   venues,
   heroImage,
+  heroVideo,
   EVENT_TYPES,
   SERVICES,
   recommendedVenuesFor,
@@ -62,16 +63,18 @@ function HomePage() {
     <main>
       {/* ── Hero ─────────────────────────────────────────── */}
       <section className="relative flex min-h-svh items-center justify-center overflow-hidden">
-        <motion.img
-          src={heroImage}
-          alt="Jawhar Groups luxury wedding venue at dusk"
+        {/* Looping background video */}
+        <motion.video
+          src={heroVideo}
+          poster={heroImage}
+          autoPlay
+          muted
+          loop
+          playsInline
           className="absolute inset-0 h-full w-full object-cover"
-          width={1920}
-          height={1080}
-          fetchPriority="high"
-          initial={{ scale: 1.12 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 2.4, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ scale: 1.08, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-forest-deep/60 via-forest-deep/30 to-forest-deep/80" />
 

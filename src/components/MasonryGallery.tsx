@@ -78,7 +78,7 @@ export function MasonryGallery({
           >
             <img
               src={img.src}
-              alt={img.caption}
+              alt={img.alt || img.caption}
               loading="lazy"
               className="w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
