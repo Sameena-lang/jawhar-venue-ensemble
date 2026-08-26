@@ -116,13 +116,13 @@ export function SiteFooter() {
         <div>
           <p className="eyebrow">Our Venues</p>
           <ul className="mt-5 space-y-3 text-sm">
-            {[
+            {([
               ["jawhar-grand", "Jawhar Grand"],
               ["jawhar-elite-ar-tower", "Jawhar Elite AR Tower"],
               ["jawhar-grand-palace", "Jawhar Grand Palace"],
               ["jawhar-garden-estate", "Jawhar Garden Estate"],
               ["jawhar-convention-centre", "Jawhar Convention Centre"],
-            ].map(([slug, name]) => (
+            ] as [string, string][]).map(([slug, name]) => (
               <li key={slug}>
                 <Link
                   to="/venues/$slug"
