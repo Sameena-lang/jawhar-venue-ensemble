@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EnquireRouteImport } from './routes/enquire'
+import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as VenuesSlugRouteImport } from './routes/venues.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnquireRoute = EnquireRouteImport.update({
+  id: '/enquire',
+  path: '/enquire',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VenuesSlugRoute = VenuesSlugRouteImport.update({
+  id: '/venues/$slug',
+  path: '/venues/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/enquire': typeof EnquireRoute
+  '/gallery': typeof GalleryRoute
+  '/venues/$slug': typeof VenuesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/enquire': typeof EnquireRoute
+  '/gallery': typeof GalleryRoute
+  '/venues/$slug': typeof VenuesSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/enquire': typeof EnquireRoute
+  '/gallery': typeof GalleryRoute
+  '/venues/$slug': typeof VenuesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/enquire' | '/gallery' | '/venues/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/enquire' | '/gallery' | '/venues/$slug'
+  id: '__root__' | '/' | '/enquire' | '/gallery' | '/venues/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EnquireRoute: typeof EnquireRoute
+  GalleryRoute: typeof GalleryRoute
+  VenuesSlugRoute: typeof VenuesSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/enquire': {
+      id: '/enquire'
+      path: '/enquire'
+      fullPath: '/enquire'
+      preLoaderRoute: typeof EnquireRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/venues/$slug': {
+      id: '/venues/$slug'
+      path: '/venues/$slug'
+      fullPath: '/venues/$slug'
+      preLoaderRoute: typeof VenuesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EnquireRoute: EnquireRoute,
+  GalleryRoute: GalleryRoute,
+  VenuesSlugRoute: VenuesSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
