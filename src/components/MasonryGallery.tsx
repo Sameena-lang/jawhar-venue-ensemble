@@ -52,10 +52,10 @@ export function MasonryGallery({
               role="tab"
               aria-selected={filter === c}
               onClick={() => setFilter(c)}
-              className={`px-5 py-2 text-[0.7rem] font-medium tracking-[0.2em] uppercase transition-all ${
+              className={`px-5 py-2.5 text-[0.7rem] font-semibold tracking-[0.2em] uppercase transition-all rounded-sm border ${
                 filter === c
-                  ? "bg-forest text-ivory"
-                  : "border border-border text-muted-foreground hover:border-gold hover:text-gold"
+                  ? "bg-[#1A342B] text-[#C4DEC9] border-[#1A342B] shadow-sm"
+                  : "bg-white text-[#1A342B]/80 border-[#1A342B]/20 hover:border-[#1A342B] hover:text-[#1A342B]"
               }`}
             >
               {c}

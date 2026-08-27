@@ -10,8 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AvailabilityRouteImport } from './routes/availability'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EnquireRouteImport } from './routes/enquire'
+import { Route as EventsRouteImport } from './routes/events'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as VenuesIndexRouteImport } from './routes/venues.index'
 import { Route as VenuesSlugRouteImport } from './routes/venues.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -19,14 +25,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AvailabilityRoute = AvailabilityRouteImport.update({
+  id: '/availability',
+  path: '/availability',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EnquireRoute = EnquireRouteImport.update({
   id: '/enquire',
   path: '/enquire',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VenuesIndexRoute = VenuesIndexRouteImport.update({
+  id: '/venues/',
+  path: '/venues/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VenuesSlugRoute = VenuesSlugRouteImport.update({
@@ -37,36 +73,91 @@ const VenuesSlugRoute = VenuesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/availability': typeof AvailabilityRoute
+  '/contact': typeof ContactRoute
   '/enquire': typeof EnquireRoute
+  '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
+  '/services': typeof ServicesRoute
   '/venues/$slug': typeof VenuesSlugRoute
+  '/venues/': typeof VenuesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/availability': typeof AvailabilityRoute
+  '/contact': typeof ContactRoute
   '/enquire': typeof EnquireRoute
+  '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
+  '/services': typeof ServicesRoute
   '/venues/$slug': typeof VenuesSlugRoute
+  '/venues': typeof VenuesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/availability': typeof AvailabilityRoute
+  '/contact': typeof ContactRoute
   '/enquire': typeof EnquireRoute
+  '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
+  '/services': typeof ServicesRoute
   '/venues/$slug': typeof VenuesSlugRoute
+  '/venues/': typeof VenuesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/enquire' | '/gallery' | '/venues/$slug'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/availability'
+    | '/contact'
+    | '/enquire'
+    | '/events'
+    | '/gallery'
+    | '/services'
+    | '/venues/$slug'
+    | '/venues/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/enquire' | '/gallery' | '/venues/$slug'
-  id: '__root__' | '/' | '/enquire' | '/gallery' | '/venues/$slug'
+  to:
+    | '/'
+    | '/about'
+    | '/availability'
+    | '/contact'
+    | '/enquire'
+    | '/events'
+    | '/gallery'
+    | '/services'
+    | '/venues/$slug'
+    | '/venues'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/availability'
+    | '/contact'
+    | '/enquire'
+    | '/events'
+    | '/gallery'
+    | '/services'
+    | '/venues/$slug'
+    | '/venues/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AvailabilityRoute: typeof AvailabilityRoute
+  ContactRoute: typeof ContactRoute
   EnquireRoute: typeof EnquireRoute
+  EventsRoute: typeof EventsRoute
   GalleryRoute: typeof GalleryRoute
+  ServicesRoute: typeof ServicesRoute
   VenuesSlugRoute: typeof VenuesSlugRoute
+  VenuesIndexRoute: typeof VenuesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -78,6 +169,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/availability': {
+      id: '/availability'
+      path: '/availability'
+      fullPath: '/availability'
+      preLoaderRoute: typeof AvailabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/enquire': {
       id: '/enquire'
       path: '/enquire'
@@ -85,11 +197,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnquireRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gallery': {
       id: '/gallery'
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/venues/': {
+      id: '/venues/'
+      path: '/venues'
+      fullPath: '/venues/'
+      preLoaderRoute: typeof VenuesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/venues/$slug': {
@@ -104,9 +237,15 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AvailabilityRoute: AvailabilityRoute,
+  ContactRoute: ContactRoute,
   EnquireRoute: EnquireRoute,
+  EventsRoute: EventsRoute,
   GalleryRoute: GalleryRoute,
+  ServicesRoute: ServicesRoute,
   VenuesSlugRoute: VenuesSlugRoute,
+  VenuesIndexRoute: VenuesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

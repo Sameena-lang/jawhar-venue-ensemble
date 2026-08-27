@@ -28,49 +28,36 @@ export function AvailabilityCalendar({ fixedVenue }: { fixedVenue?: string }) {
   const selectedStatus = selected ? !isDateBooked(venue, selected) : null;
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1fr_360px]">
-      <div className="bg-card p-6 shadow-[0_20px_60px_-30px_rgba(32,60,50,0.35)] md:p-8">
+    <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
+      {/* Calendar */}
+      <div className="bg-[#E2EFE5] border border-[#1A342B]/20 p-6 md:p-8 rounded-sm text-[#1A342B]">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <label htmlFor="venue-select" className="eyebrow">Venue</label>
+            <label htmlFor="venue-select" className="eyebrow !text-[#B89A57]">Venue</label>
             <select
               id="venue-select"
               value={venue}
               disabled={!!fixedVenue}
-              onChange={(e) => {
-                setVenue(e.target.value);
-                setSelected(null);
-              }}
-              className="mt-2 block w-full border border-input bg-transparent px-4 py-3 text-sm text-forest focus:outline-none focus:ring-1 focus:ring-gold disabled:opacity-70"
+              onChange={(e) => { setVenue(e.target.value); setSelected(null); }}
+              className="mt-2 block w-full border border-[#1A342B]/25 bg-white px-4 py-3 text-sm text-[#1A342B] focus:outline-none focus:border-[#1A342B] disabled:opacity-70 rounded-sm"
             >
               {venues.map((v) => (
-                <option key={v.slug} value={v.slug}>
-                  {v.name}
-                </option>
+                <option key={v.slug} value={v.slug}>{v.name}</option>
               ))}
             </select>
           </div>
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => setMonthOffset((m) => Math.max(0, m - 1))}
-              disabled={monthOffset === 0}
-              className="p-2 text-forest disabled:opacity-30"
-              aria-label="Previous month"
-            >
+            <button onClick={() => setMonthOffset((m) => Math.max(0, m - 1))} disabled={monthOffset === 0} className="p-2 text-[#1A342B] hover:text-[#B89A57] disabled:opacity-30 transition-colors" aria-label="Previous month">
               <ChevronLeft className="h-5 w-5" />
             </button>
-            <p className="font-display text-xl text-forest">{monthName}</p>
-            <button
-              onClick={() => setMonthOffset((m) => Math.min(11, m + 1))}
-              className="p-2 text-forest"
-              aria-label="Next month"
-            >
+            <p className="font-display text-xl text-[#1A342B] font-medium">{monthName}</p>
+            <button onClick={() => setMonthOffset((m) => Math.min(11, m + 1))} className="p-2 text-[#1A342B] hover:text-[#B89A57] transition-colors" aria-label="Next month">
               <ChevronRight className="h-5 w-5" />
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-7 gap-1 text-center text-[0.65rem] font-semibold tracking-widest text-muted-foreground uppercase">
+        <div className="grid grid-cols-7 gap-1 text-center text-[0.65rem] font-semibold tracking-widest text-[#B89A57] uppercase">
           {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((d) => (
             <div key={d} className="py-2">{d}</div>
           ))}
@@ -85,19 +72,13 @@ export function AvailabilityCalendar({ fixedVenue }: { fixedVenue?: string }) {
             const isSel = selected === iso;
             return (
               <button
-                key={iso}
-                disabled={past}
-                onClick={() => setSelected(iso)}
-                aria-pressed={isSel}
+                key={iso} disabled={past} onClick={() => setSelected(iso)} aria-pressed={isSel}
                 aria-label={`${date.toDateString()} — ${booked ? "booked" : "available"}`}
-                className={`aspect-square text-sm transition-all ${
-                  isSel
-                    ? "bg-gold font-bold text-forest-deep"
-                    : past
-                      ? "text-muted-foreground/30"
-                      : booked
-                        ? "bg-muted text-muted-foreground line-through decoration-destructive/50"
-                        : "bg-pastel-green/60 text-forest hover:bg-pastel-green"
+                className={`aspect-square text-sm transition-all rounded-sm font-medium ${
+                  isSel ? "bg-[#B89A57] font-bold text-[#1A342B]"
+                    : past ? "text-[#1A342B]/25"
+                    : booked ? "bg-[#1A342B]/15 text-[#1A342B]/40 line-through"
+                    : "bg-white text-[#1A342B] hover:bg-[#C4DEC9] border border-[#1A342B]/15"
                 }`}
               >
                 {d}
@@ -105,84 +86,49 @@ export function AvailabilityCalendar({ fixedVenue }: { fixedVenue?: string }) {
             );
           })}
         </div>
-        <div className="mt-5 flex gap-6 text-xs text-muted-foreground">
-          <span className="flex items-center gap-2">
-            <span className="h-3 w-3 bg-pastel-green" /> Available
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="h-3 w-3 bg-muted" /> Booked
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="h-3 w-3 bg-gold" /> Selected
-          </span>
+        <div className="mt-5 flex gap-6 text-xs text-[#1A342B]/70">
+          <span className="flex items-center gap-2"><span className="h-3 w-3 bg-white border border-[#1A342B]/20 rounded-sm" /> Available</span>
+          <span className="flex items-center gap-2"><span className="h-3 w-3 bg-[#1A342B]/15 rounded-sm" /> Booked</span>
+          <span className="flex items-center gap-2"><span className="h-3 w-3 bg-[#B89A57] rounded-sm" /> Selected</span>
         </div>
       </div>
 
-      <div className="flex flex-col bg-forest p-8 text-ivory">
-        <p className="eyebrow">Check Availability</p>
-        <div className="mt-6 space-y-5">
-          <div>
-            <label htmlFor="session" className="text-xs tracking-widest text-white/60 uppercase">Session</label>
-            <div className="mt-2 grid grid-cols-3 gap-2">
-              {SESSIONS.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => setSession(s)}
-                  className={`border px-2 py-2.5 text-xs transition-colors ${
-                    session === s
-                      ? "border-gold bg-gold text-forest-deep"
-                      : "border-white/20 text-white/70 hover:border-gold/60"
-                  }`}
-                >
-                  {s}
-                </button>
-              ))}
+      {/* Side Panel — dark green for contrast */}
+      <div className="flex flex-col bg-[#1A342B] border border-[#B89A57]/30 p-8 text-white rounded-sm shadow-xl justify-between">
+        <div>
+          <p className="eyebrow !text-[#B89A57]">CHECK AVAILABILITY</p>
+          <div className="mt-6 space-y-5">
+            <div>
+              <label className="text-xs tracking-widest text-[#B89A57] uppercase font-semibold">Session</label>
+              <div className="mt-2 grid grid-cols-3 gap-2">
+                {SESSIONS.map((s) => (
+                  <button key={s} onClick={() => setSession(s)}
+                    className={`border px-2 py-2.5 text-xs transition-colors rounded-sm ${session === s ? "border-[#B89A57] bg-[#B89A57] text-[#1A342B] font-semibold" : "border-white/20 text-white/80 hover:border-[#B89A57]"}`}>
+                    {s}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-          <div>
-            <label htmlFor="guests" className="text-xs tracking-widest text-white/60 uppercase">
-              Expected Guests
-            </label>
-            <input
-              id="guests"
-              type="number"
-              min={1}
-              value={guests}
-              onChange={(e) => setGuests(e.target.value)}
-              placeholder="e.g. 500"
-              className="mt-2 w-full border border-white/20 bg-transparent px-4 py-3 text-sm placeholder:text-white/30 focus:border-gold focus:outline-none"
-            />
-          </div>
-
-          {selected && (
-            <div
-              className={`flex items-start gap-3 border p-4 ${
-                selectedStatus ? "border-pastel-green/50 bg-pastel-green/10" : "border-destructive/50 bg-destructive/10"
-              }`}
-              role="status"
-            >
-              {selectedStatus ? (
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-pastel-green" />
-              ) : (
-                <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
-              )}
-              <p className="text-sm leading-relaxed">
-                {new Date(selected + "T00:00").toLocaleDateString("en-IN", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}{" "}
-                · {session} session is{" "}
-                <strong>{selectedStatus ? "available" : "already booked"}</strong>
-                {selectedStatus ? " — reserve it before it's gone." : " — try another date or venue."}
-              </p>
+            <div>
+              <label htmlFor="guests" className="text-xs tracking-widest text-[#B89A57] uppercase font-semibold">Expected Guests</label>
+              <input id="guests" type="number" min={1} value={guests} onChange={(e) => setGuests(e.target.value)} placeholder="e.g. 500"
+                className="mt-2 w-full border border-white/20 bg-[#0F231B] px-4 py-3 text-sm text-white placeholder:text-white/40 focus:border-[#B89A57] focus:outline-none rounded-sm" />
             </div>
-          )}
-          <a href="/enquire" className="btn-gold mt-2 w-full">
-            {selectedStatus === false ? "Enquire for Alternatives" : "Reserve This Date"}
-          </a>
+            {selected && (
+              <div className={`flex items-start gap-3 border p-4 rounded-sm ${selectedStatus ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-300" : "border-rose-500/50 bg-rose-500/10 text-rose-300"}`} role="status">
+                {selectedStatus ? <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400" /> : <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-rose-400" />}
+                <p className="text-xs sm:text-sm leading-relaxed">
+                  {new Date(selected + "T00:00").toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}{" "}
+                  · {session} session is <strong>{selectedStatus ? "available" : "already booked"}</strong>
+                  {selectedStatus ? " — reserve it before it's gone." : " — try another date or venue."}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
+        <a href="/enquire" className="btn-gold mt-6 w-full text-center">
+          {selectedStatus === false ? "Enquire for Alternatives" : "Reserve This Date"}
+        </a>
       </div>
     </div>
   );

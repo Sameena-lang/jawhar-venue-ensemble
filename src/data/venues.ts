@@ -10,6 +10,7 @@ import venueElite from "@/assets/venue-elite.jpg";
 import venuePalace from "@/assets/venue-palace.jpg";
 import venueGarden from "@/assets/venue-garden.jpg";
 import venueConvention from "@/assets/venue-convention.jpg";
+import heroWeddingImage from "@/assets/hero-wedding.jpg";
 
 export const WHATSAPP_NUMBER = "919876543210";
 export const PHONE_DISPLAY = "+91 98765 43210";
@@ -32,6 +33,15 @@ export interface VenueVideoItem {
   description?: string;
 }
 
+export interface VenueSpaceItem {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  capacity?: string;
+  highlights?: string[];
+}
+
 export interface Venue {
   id: string;
   name: string;
@@ -47,16 +57,17 @@ export interface Venue {
   thumbnailImage: string;
   image: string; // for backward compatibility with existing components
   facilities: string[];
+  spaces?: VenueSpaceItem[];
   events: string[];
   gallery: VenueGalleryItem[];
   videos?: VenueVideoItem[];
   mapQuery: string;
 }
 
-// Cinematic Hero image using the real Jawhar Grand main chandelier hall
-export const heroImage = jawharGrandMainHall;
-// Homepage hero background video
-export const heroVideo = "/videos/jawhar-homepage-hero.mp4";
+// Cinematic Hero image using the Instagram reel poster
+export const heroImage = heroWeddingImage;
+// Homepage hero background video from Instagram reel
+export const heroVideo = "/videos/jawhar-instagram-hero.mp4";
 
 export const EVENT_TYPES = [
   { name: "Wedding", description: "Sacred ceremonies framed by grand mandaps and timeless rituals." },
@@ -145,6 +156,43 @@ export const venues: Venue[] = [
       "Bridal & family preparation rooms",
       "Grand covered entryway with steps",
     ],
+    spaces: [
+      {
+        id: "main-hall",
+        name: "Main Ballroom",
+        description: "Pillarless chandeliered grand ballroom designed for majestic wedding ceremonies, mandap setups, and guest seating.",
+        image: jawharGrandMainHall,
+        highlights: ["1,200 Guest Capacity", "Crystal Chandelier Canopy", "Central AC"],
+      },
+      {
+        id: "stage",
+        name: "Celebration Stage",
+        description: "Bespoke ceremonial stage with integrated floral archway, lighting controls, and bride & groom seating area.",
+        image: jawharGrandStage,
+        highlights: ["Custom Backdrop Rigging", "DMX Lighting", "VIP Seating"],
+      },
+      {
+        id: "foyer",
+        name: "Banquet Foyer",
+        description: "Welcoming air-conditioned foyer for guest registration, welcome drinks, and pre-function gatherings.",
+        image: jawharGrandFoyer,
+        highlights: ["Welcome Reception Desk", "Climate Controlled", "Marble Detail"],
+      },
+      {
+        id: "dining",
+        name: "Dining & Buffet",
+        description: "Expansive dining floor equipped with live food stations, traditional thali seating, and hot buffet warmers.",
+        image: jawharGrandBuffet,
+        highlights: ["Live Counter Setup", "Fast Service Layout", "Hygiene Standard"],
+      },
+      {
+        id: "facade",
+        name: "Grand Entrance",
+        description: "Covered porte-cochère entrance at MM Tower with steps welcome and direct basement parking access.",
+        image: jawharGrandFacade,
+        highlights: ["Porte-Cochère Drop-off", "Valet Access", "Illuminated Signage"],
+      },
+    ],
     events: ["Wedding", "Reception", "Engagement", "Seemantham", "Birthday", "Corporate", "Anniversary"],
     gallery: jawharGrandGallery,
     mapQuery: "Jawhar Grand Party Hall, MM Tower, Chennai",
@@ -174,6 +222,22 @@ export const venues: Venue[] = [
       "Premium AV & lighting rig",
       "Lift-served dedicated floors",
       "Basement valet parking",
+    ],
+    spaces: [
+      {
+        id: "rooftop-terrace",
+        name: "Skyline Terrace",
+        description: "Open-air sunset terrace for evening receptions, cocktail galas, and celestial outdoor dining.",
+        image: venueElite,
+        highlights: ["Panoramic Views", "Ambient Sunset Deck", "Cocktail Lounge"],
+      },
+      {
+        id: "indoor-hall",
+        name: "Tower Glass Hall",
+        description: "Climate-controlled glass-walled indoor banquet hall for ceremonies and indoor dining.",
+        image: venueElite,
+        highlights: ["Glass Wall Architecture", "Pro Lighting Rig", "Valet Lift Access"],
+      },
     ],
     events: ["Reception", "Engagement", "Birthday", "Corporate", "Anniversary"],
     gallery: [
@@ -209,7 +273,7 @@ export const venues: Venue[] = [
     story:
       "Jawhar Grand Palace is an ode to timeless grandeur — sweeping architecture, majestic pillars, and spacious banquet layouts. Tradition is celebrated in style. For families who dream of a wedding that feels regal and unforgettable, the Palace stands as a monument to celebrated memories.",
     heroImage: venuePalace,
-    heroVideo: "/videos/jawhar-palace-hero.mp4",
+    heroVideo: "https://www.youtube.com/embed/xLYvtQzWKlY?autoplay=1&mute=1&loop=1&playlist=xLYvtQzWKlY&controls=0&showinfo=0&rel=0&modestbranding=1",
     thumbnailImage: venuePalace,
     image: venuePalace,
     facilities: [
@@ -221,6 +285,15 @@ export const venues: Venue[] = [
       "Ample vehicle parking",
       "Procession courtyard",
       "Guest accommodation block",
+    ],
+    spaces: [
+      {
+        id: "palace-mandap",
+        name: "Royal Mandap Hall",
+        description: "Soaring marble hall featuring ornate pillars, royal mandap platform, and grand ceremonial seating.",
+        image: venuePalace,
+        highlights: ["2,000 Guest Capacity", "Gilded Staircase", "Bridal Suites"],
+      },
     ],
     events: ["Wedding", "Reception", "Seemantham", "Engagement"],
     gallery: [
@@ -259,6 +332,15 @@ export const venues: Venue[] = [
       "Outdoor catering stations",
       "Guest shuttle service",
     ],
+    spaces: [
+      {
+        id: "estate-lawn",
+        name: "Great Lawn & Pavilion",
+        description: "Sprawling manicured lawn surrounded by frangipani trees and white pavilion for open-air mandap ceremonies.",
+        image: venueGarden,
+        highlights: ["2.5 Acres Open Space", "Weather Marquee", "Coastal Breeze"],
+      },
+    ],
     events: ["Wedding", "Seemantham", "Birthday", "Anniversary", "Reception"],
     gallery: [
       {
@@ -296,6 +378,15 @@ export const venues: Venue[] = [
       "Direct highway access",
       "Dedicated loading dock",
     ],
+    spaces: [
+      {
+        id: "convention-hall",
+        name: "Conclave Auditorium",
+        description: "Contemporary walnut-panelled auditorium with 4K LED backdrop wall and acoustic tuning.",
+        image: venueConvention,
+        highlights: ["Pillar-less Acoustics", "4K LED Stage Wall", "Highway Access"],
+      },
+    ],
     events: ["Corporate", "Birthday", "Anniversary", "Reception", "Engagement"],
     gallery: [
       {
@@ -310,11 +401,66 @@ export const venues: Venue[] = [
   },
 ];
 
-// All Gallery images combining real Jawhar photographs
-export const allGalleryImages: VenueGalleryItem[] = jawharGrandGallery.map((g) => ({
-  ...g,
-  caption: `${g.caption} — Jawhar Grand`,
-}));
+import galleryCatering from "@/assets/gallery-catering.jpg";
+import galleryCouple from "@/assets/gallery-couple.jpg";
+import galleryDecor from "@/assets/gallery-decor.jpg";
+
+// All Gallery images combining real Jawhar photographs across venues
+export const allGalleryImages: VenueGalleryItem[] = [
+  ...jawharGrandGallery.map((g) => ({
+    ...g,
+    caption: `${g.caption} — Jawhar Grand`,
+  })),
+  {
+    id: "gal-couple",
+    src: galleryCouple,
+    alt: "Wedding couple in traditional South Indian wedding attire",
+    category: "Weddings",
+    caption: "Traditional Muhurtham Vows — Jawhar Collections",
+  },
+  {
+    id: "gal-decor",
+    src: galleryDecor,
+    alt: "Bespoke floral mandap and stage backdrop lighting",
+    category: "Decor",
+    caption: "Handcrafted Floral Archway & Lighting",
+  },
+  {
+    id: "gal-catering",
+    src: galleryCatering,
+    alt: "Traditional South Indian feast and banquet catering",
+    category: "Dining",
+    caption: "Master Chef Banquet Feast & Sweets",
+  },
+  {
+    id: "gal-elite-1",
+    src: venueElite,
+    alt: "Jawhar Elite AR Tower skyline terrace venue",
+    category: "Venues",
+    caption: "Skyline Sunset Terrace — Jawhar Elite AR Tower",
+  },
+  {
+    id: "gal-palace-1",
+    src: venuePalace,
+    alt: "Jawhar Grand Palace royal wedding hall",
+    category: "Venues",
+    caption: "Royal Marble Mandap — Jawhar Grand Palace",
+  },
+  {
+    id: "gal-garden-1",
+    src: venueGarden,
+    alt: "Jawhar Garden Estate open-air lawn",
+    category: "Venues",
+    caption: "Great Lawn & White Pavilion — Jawhar Garden Estate",
+  },
+  {
+    id: "gal-convention-1",
+    src: venueConvention,
+    alt: "Jawhar Convention Centre acoustic hall",
+    category: "Venues",
+    caption: "Pillarless Conclave Auditorium — Jawhar Convention Centre",
+  },
+];
 
 export function getVenue(slug: string): Venue | undefined {
   return venues.find((v) => v.slug === slug || (slug === "jawhar-garden-estate" && v.slug === "venue-4") || (slug === "jawhar-convention-centre" && v.slug === "venue-5"));
