@@ -66,8 +66,8 @@ export interface Venue {
 
 // Cinematic Hero image using the Instagram reel poster
 export const heroImage = heroWeddingImage;
-// Homepage hero background video from Instagram reel
-export const heroVideo = "/videos/jawhar-instagram-hero.mp4";
+// Homepage hero background video
+export const heroVideo = "/videos/jawhar-instagram-hero-new.mp4";
 
 export const EVENT_TYPES = [
   { name: "Wedding", description: "Sacred ceremonies framed by grand mandaps and timeless rituals." },

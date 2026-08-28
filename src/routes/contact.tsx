@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
-import { PHONE_DISPLAY, whatsappLink, heroImage } from "@/data/venues";
+import { PHONE_DISPLAY, whatsappLink } from "@/data/venues";
+import contactHeroImage from "@/assets/hero-bg-5.jpg";
 import { SectionHeading } from "@/components/Reveal";
 
 export const Route = createFileRoute("/contact")({
@@ -18,7 +19,7 @@ function ContactPage() {
     <main className="min-h-screen bg-[#C4DEC9] text-[#1A342B] pt-28 pb-24">
       {/* Hero */}
       <section className="relative bg-[#C4DEC9] py-24 text-white overflow-hidden flex flex-col justify-center">
-        <img src={heroImage} alt="Contact Hero" className="absolute inset-0 h-full w-full object-cover" />
+        <img src={contactHeroImage} alt="Contact Hero" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A342B]/80 via-[#1A342B]/70 to-[#0F231B]" />
         <div className="container-luxe text-center max-w-3xl mx-auto relative z-10">
           <p className="eyebrow !text-[#B89A57]">HOSPITALITY CONCIERGE</p>

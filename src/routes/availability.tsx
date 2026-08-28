@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AvailabilityCalendar } from "@/components/AvailabilityCalendar";
 import { SectionHeading } from "@/components/Reveal";
+import availabilityHeroImage from "@/assets/hero-bg-4.jpg";
 
 export const Route = createFileRoute("/availability")({
   head: () => ({
@@ -15,11 +16,13 @@ export const Route = createFileRoute("/availability")({
 function AvailabilityPage() {
   return (
     <main className="min-h-screen bg-[#C4DEC9] text-[#1A342B] pt-28 pb-24">
-      <section className="bg-[#C4DEC9] py-16 border-b border-[#1A342B]/15">
-        <div className="container-luxe text-center max-w-3xl mx-auto">
+      <section className="relative bg-[#C4DEC9] py-24 text-white overflow-hidden flex flex-col justify-center">
+        <img src={availabilityHeroImage} alt="Availability Hero" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A342B]/80 via-[#1A342B]/70 to-[#0F231B]" />
+        <div className="container-luxe text-center max-w-3xl mx-auto relative z-10">
           <p className="eyebrow !text-[#B89A57]">LIVE DATE CONCIERGE</p>
-          <h1 className="mt-3 font-display text-4xl sm:text-5xl lg:text-6xl font-medium text-[#1A342B]">Check Venue Availability</h1>
-          <p className="mt-4 text-base text-[#1A342B]/80 font-light">Select your preferred venue and date below to check session availability across our five signature properties.</p>
+          <h1 className="mt-3 font-display text-4xl sm:text-5xl lg:text-6xl font-medium text-white">Check Venue Availability</h1>
+          <p className="mt-4 text-base text-white/80 font-light">Select your preferred venue and date below to check session availability across our five signature properties.</p>
         </div>
       </section>
 

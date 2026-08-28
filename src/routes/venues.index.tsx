@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { MapPin, Users, ArrowRight, CheckCircle2 } from "lucide-react";
-import { venues, heroImage } from "@/data/venues";
+import { venues } from "@/data/venues";
+import venuesHeroImage from "@/assets/venues-hero-new.jpg";
 import { Reveal, SectionHeading } from "@/components/Reveal";
 
 export const Route = createFileRoute("/venues/")({
@@ -19,7 +20,7 @@ function VenuesIndexPage() {
     <main className="min-h-screen bg-[#C4DEC9] text-[#1A342B] pt-28 pb-24">
       {/* ── Hero ── */}
       <section className="relative bg-[#C4DEC9] py-24 text-white overflow-hidden flex flex-col justify-center">
-        <img src={heroImage} alt="Venues Hero" className="absolute inset-0 h-full w-full object-cover" />
+        <img src={venuesHeroImage} alt="Venues Hero" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A342B]/80 via-[#1A342B]/70 to-[#0F231B]" />
         <div className="container-luxe text-center max-w-4xl mx-auto relative z-10">
           <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="eyebrow !text-[#B89A57]">JAWHAR COLLECTION</motion.p>

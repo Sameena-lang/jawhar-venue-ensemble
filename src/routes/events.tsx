@@ -2,7 +2,8 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, Users, ArrowRight, CheckCircle2 } from "lucide-react";
-import { EVENT_TYPES, venues, whatsappLink, heroImage, type EventType } from "@/data/venues";
+import { EVENT_TYPES, venues, whatsappLink, type EventType } from "@/data/venues";
+import eventsHeroImage from "@/assets/events-hero-new.jpg";
 import { Reveal, SectionHeading } from "@/components/Reveal";
 
 export const Route = createFileRoute("/events")({
@@ -34,7 +35,7 @@ function EventsPage() {
     <main className="min-h-screen bg-[#C4DEC9] text-[#1A342B] pt-28 pb-24">
       {/* ── HERO ── */}
       <section className="relative bg-[#C4DEC9] py-24 text-white overflow-hidden flex flex-col justify-center">
-        <img src={heroImage} alt="Events Hero" className="absolute inset-0 h-full w-full object-cover" />
+        <img src={eventsHeroImage} alt="Events Hero" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A342B]/80 via-[#1A342B]/70 to-[#0F231B]" />
         <div className="container-luxe text-center max-w-3xl mx-auto relative z-10">
           <p className="eyebrow !text-[#B89A57]">OCCASIONS WE HOST</p>
