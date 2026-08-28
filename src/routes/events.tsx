@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, Users, ArrowRight, CheckCircle2 } from "lucide-react";
-import { EVENT_TYPES, venues, whatsappLink, type EventType } from "@/data/venues";
+import { EVENT_TYPES, venues, whatsappLink, heroImage, type EventType } from "@/data/venues";
 import { Reveal, SectionHeading } from "@/components/Reveal";
 
 export const Route = createFileRoute("/events")({
@@ -27,17 +27,19 @@ const EVENT_DETAILS: Record<string, { tagline: string; description: string; high
 
 function EventsPage() {
   const [selectedEvent, setSelectedEvent] = useState<EventType>("Wedding");
-  const currentDetails = EVENT_DETAILS[selectedEvent] || EVENT_DETAILS.Wedding;
+  const currentDetails = EVENT_DETAILS[selectedEvent as string] || EVENT_DETAILS['Wedding']!;
   const suitableVenues = venues.filter((v) => v.events.includes(selectedEvent));
 
   return (
     <main className="min-h-screen bg-[#C4DEC9] text-[#1A342B] pt-28 pb-24">
       {/* ── HERO ── */}
-      <section className="bg-[#C4DEC9] py-16 text-[#1A342B] border-b border-[#1A342B]/15">
-        <div className="container-luxe text-center max-w-3xl mx-auto">
+      <section className="relative bg-[#C4DEC9] py-24 text-white overflow-hidden flex flex-col justify-center">
+        <img src={heroImage} alt="Events Hero" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A342B]/80 via-[#1A342B]/70 to-[#0F231B]" />
+        <div className="container-luxe text-center max-w-3xl mx-auto relative z-10">
           <p className="eyebrow !text-[#B89A57]">OCCASIONS WE HOST</p>
-          <h1 className="mt-3 font-display text-4xl sm:text-5xl lg:text-6xl font-medium">Designed for Life's Most Cherished Moments</h1>
-          <p className="mt-4 text-base text-[#1A342B]/80 font-light">Select an occasion below to explore dedicated space arrangements, decor concepts, and matching venues.</p>
+          <h1 className="mt-3 font-display text-4xl sm:text-5xl lg:text-6xl font-medium text-white">Designed for Life's Most Cherished Moments</h1>
+          <p className="mt-4 text-base text-white/80 font-light">Select an occasion below to explore dedicated space arrangements, decor concepts, and matching venues.</p>
         </div>
       </section>
 

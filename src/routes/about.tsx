@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CheckCircle2, ArrowRight } from "lucide-react";
-import { venues } from "@/data/venues";
+import { venues, heroImage } from "@/data/venues";
 import { Reveal, SectionHeading } from "@/components/Reveal";
 
 export const Route = createFileRoute("/about")({
@@ -16,11 +16,13 @@ export const Route = createFileRoute("/about")({
 function AboutPage() {
   return (
     <main className="min-h-screen bg-[#C4DEC9] text-[#1A342B] pt-28 pb-24">
-      <section className="bg-[#C4DEC9] py-20 border-b border-[#1A342B]/15">
-        <div className="container-luxe text-center max-w-4xl mx-auto">
+      <section className="relative bg-[#C4DEC9] py-24 text-white overflow-hidden flex flex-col justify-center">
+        <img src={heroImage} alt="About Hero" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A342B]/80 via-[#1A342B]/70 to-[#0F231B]" />
+        <div className="container-luxe text-center max-w-4xl mx-auto relative z-10">
           <p className="eyebrow !text-[#B89A57]">OUR PHILOSOPHY & HERITAGE</p>
-          <h1 className="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-tight text-[#1A342B]">Crafting Extraordinary Celebrations in Chennai</h1>
-          <p className="mt-6 text-base sm:text-lg text-[#1A342B]/80 max-w-2xl mx-auto font-light leading-relaxed">Jawhar Groups was founded on a simple promise: that life's most sacred and joyous occasions deserve architecture and hospitality worthy of their emotion.</p>
+          <h1 className="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-tight text-white">Crafting Extraordinary Celebrations in Chennai</h1>
+          <p className="mt-6 text-base sm:text-lg text-white/80 max-w-2xl mx-auto font-light leading-relaxed">Jawhar Groups was founded on a simple promise: that life's most sacred and joyous occasions deserve architecture and hospitality worthy of their emotion.</p>
         </div>
       </section>
 

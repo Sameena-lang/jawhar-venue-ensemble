@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
-import { PHONE_DISPLAY, whatsappLink } from "@/data/venues";
+import { PHONE_DISPLAY, whatsappLink, heroImage } from "@/data/venues";
 import { SectionHeading } from "@/components/Reveal";
 
 export const Route = createFileRoute("/contact")({
@@ -17,11 +17,13 @@ function ContactPage() {
   return (
     <main className="min-h-screen bg-[#C4DEC9] text-[#1A342B] pt-28 pb-24">
       {/* Hero */}
-      <section className="bg-[#C4DEC9] py-16 border-b border-[#1A342B]/15">
-        <div className="container-luxe text-center max-w-3xl mx-auto">
+      <section className="relative bg-[#C4DEC9] py-24 text-white overflow-hidden flex flex-col justify-center">
+        <img src={heroImage} alt="Contact Hero" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A342B]/80 via-[#1A342B]/70 to-[#0F231B]" />
+        <div className="container-luxe text-center max-w-3xl mx-auto relative z-10">
           <p className="eyebrow !text-[#B89A57]">HOSPITALITY CONCIERGE</p>
-          <h1 className="mt-3 font-display text-4xl sm:text-5xl lg:text-6xl font-medium text-[#1A342B]">Let's Plan Your Celebration</h1>
-          <p className="mt-4 text-base text-[#1A342B]/80 font-light">Our venue managers are available to assist you with hall tours, date inquiries, and customized event planning.</p>
+          <h1 className="mt-3 font-display text-4xl sm:text-5xl lg:text-6xl font-medium text-white">Let's Plan Your Celebration</h1>
+          <p className="mt-4 text-base text-white/80 font-light">Our venue managers are available to assist you with hall tours, date inquiries, and customized event planning.</p>
         </div>
       </section>
 

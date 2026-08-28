@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { MapPin, Users, ArrowRight, CheckCircle2 } from "lucide-react";
-import { venues } from "@/data/venues";
+import { venues, heroImage } from "@/data/venues";
 import { Reveal, SectionHeading } from "@/components/Reveal";
 
 export const Route = createFileRoute("/venues/")({
@@ -18,13 +18,15 @@ function VenuesIndexPage() {
   return (
     <main className="min-h-screen bg-[#C4DEC9] text-[#1A342B] pt-28 pb-24">
       {/* ── Hero ── */}
-      <section className="bg-[#C4DEC9] py-20 text-[#1A342B] border-b border-[#1A342B]/15">
-        <div className="container-luxe text-center max-w-4xl mx-auto">
+      <section className="relative bg-[#C4DEC9] py-24 text-white overflow-hidden flex flex-col justify-center">
+        <img src={heroImage} alt="Venues Hero" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A342B]/80 via-[#1A342B]/70 to-[#0F231B]" />
+        <div className="container-luxe text-center max-w-4xl mx-auto relative z-10">
           <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="eyebrow !text-[#B89A57]">JAWHAR COLLECTION</motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }} className="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-tight text-[#1A342B]">
+          <motion.h1 initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }} className="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-tight text-white">
             Architectural Masterpieces for Extraordinary Celebrations
           </motion.h1>
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="mt-6 text-base sm:text-lg text-[#1A342B]/80 max-w-2xl mx-auto font-light leading-relaxed">
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="mt-6 text-base sm:text-lg text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
             Discover five distinctive venues across Chennai — from chandeliered ballroom majesty to skyline terraces and sprawling garden lawns.
           </motion.p>
         </div>
