@@ -7,18 +7,35 @@ interface JawharLoadingScreenProps {
 
 export function JawharLoadingScreen({ onComplete }: JawharLoadingScreenProps) {
   const prefersReducedMotion = useReducedMotion();
-  const [sequenceComplete, setSequenceComplete] = useState(false);
+  const [minimumDurationComplete, setMinimumDurationComplete] = useState(false);
+  const [appReady, setAppReady] = useState(false);
 
+  // Handle App Readiness
   useEffect(() => {
-    // The loading sequence takes roughly 3.2s to fully reveal.
-    // We let it play before indicating readiness to exit.
+    if (document.readyState === 'complete') {
+      setAppReady(true);
+    } else {
+      const handleLoad = () => setAppReady(true);
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
+    }
+  }, []);
+
+  // Handle Minimum Duration
+  useEffect(() => {
     const timer = setTimeout(() => {
-      setSequenceComplete(true);
-      onComplete();
-    }, prefersReducedMotion ? 500 : 3200);
+      setMinimumDurationComplete(true);
+    }, prefersReducedMotion ? 500 : 7000); // 7 seconds minimum duration
 
     return () => clearTimeout(timer);
-  }, [onComplete, prefersReducedMotion]);
+  }, [prefersReducedMotion]);
+
+  // Combine conditions
+  useEffect(() => {
+    if (minimumDurationComplete && appReady) {
+      onComplete();
+    }
+  }, [minimumDurationComplete, appReady, onComplete]);
 
   if (prefersReducedMotion) {
     return (
@@ -33,160 +50,145 @@ export function JawharLoadingScreen({ onComplete }: JawharLoadingScreenProps) {
     );
   }
 
+  // Letter by letter animation for JAWHAR
+  const jawharLetters = "JAWHAR".split("");
+  
   return (
     <motion.div
-      // Background dissolves last (delay 0.6s)
+      // Background dissolves last
       exit={{ opacity: 0, transition: { delay: 0.6, duration: 0.8, ease: "easeOut" } }}
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#C8DDD1] overflow-hidden"
     >
-      {/* Soft Ivory Glow */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[70vw] h-[70vw] max-w-[600px] max-h-[600px] rounded-full bg-[#F8F5ED] opacity-[0.6] blur-[100px]" />
-      </div>
+      {/* 0.0 - 0.8: Soft Ivory Glow fades in */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.6 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+      >
+        <div className="w-[70vw] h-[70vw] max-w-[600px] max-h-[600px] rounded-full bg-[#F8F5ED] blur-[100px]" />
+      </motion.div>
 
-      {/* Subtle Corner Leaves (Botanical Shadows) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
-        <svg className="absolute -top-10 -right-10 w-64 h-64 text-[#A8C5B3]" viewBox="0 0 100 100" fill="currentColor">
-          <path d="M 10 90 Q 50 10 90 10 Q 90 50 10 90 Z" />
-          <path d="M 20 80 Q 70 20 95 30 Q 80 80 20 80 Z" />
-        </svg>
-        <svg className="absolute -bottom-10 -left-10 w-64 h-64 text-[#A8C5B3]" viewBox="0 0 100 100" fill="currentColor">
-          <path d="M 90 10 Q 50 90 10 90 Q 10 50 90 10 Z" />
-          <path d="M 80 20 Q 30 80 5 70 Q 20 20 80 20 Z" />
-        </svg>
-      </div>
-
-      {/* Subtle Ornamentation Container */}
-      <div className="absolute inset-4 sm:inset-6 md:inset-8 pointer-events-none border border-[#B89A57]/30 flex items-center justify-center">
-        {/* Top Center Diamond */}
-        <div className="absolute top-0 -translate-y-1/2 w-2 h-2 rotate-45 bg-[#B89A57]" />
-        {/* Bottom Center Diamond */}
-        <div className="absolute bottom-0 translate-y-1/2 w-2 h-2 rotate-45 bg-[#B89A57]" />
-        
-        {/* Corner Ornaments */}
-        <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-[#B89A57]" />
-        <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-[#B89A57]" />
-        <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-[#B89A57]" />
-        <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-[#B89A57]" />
-      </div>
+      {/* Subtle Gold Grain (opacity animation) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.15 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="absolute inset-0 pointer-events-none opacity-15"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' fill='%23B89A57' opacity='0.2'/%3E%3C/svg%3E")`,
+        }}
+      />
 
       {/* Main Content */}
       <div className="relative flex flex-col items-center z-10 w-full max-w-sm px-6">
         
-        {/* Welcome To */}
+        {/* 0.8 - 1.8: Reveal Crest */}
         <motion.div
-          initial={{ opacity: 0, y: 5 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, transition: { delay: 0.5, duration: 0.3 } }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="flex items-center gap-4 mb-6"
-        >
-          <div className="h-[1px] w-10 bg-[#B89A57]/60 relative">
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rotate-45 border border-[#B89A57]" />
-          </div>
-          <span className="font-display italic text-[#1A342B]/80 text-sm tracking-widest">
-            Welcome to
-          </span>
-          <div className="h-[1px] w-10 bg-[#B89A57]/60 relative">
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rotate-45 border border-[#B89A57]" />
-          </div>
-        </motion.div>
-
-        {/* Crest */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.94, filter: "blur(6px)" }}
+          initial={{ opacity: 0, scale: 0.94, filter: "blur(8px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          exit={{ opacity: 0, scale: 0.96, transition: { delay: 0.5, duration: 0.4 } }}
-          transition={{ delay: 0.45, duration: 1, ease: "easeOut" }}
-          className="mb-4"
+          exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.4 } }}
+          transition={{ delay: 0.8, duration: 1, ease: [0.25, 0.1, 0.25, 1] }} // smooth cinematic ease-out
+          className="mb-6"
         >
           <img src="/favicon.png" alt="Jawhar Crest" className="w-20 h-20 sm:w-24 sm:h-24 object-contain" />
         </motion.div>
 
         {/* Brand Name */}
-        <div className="flex flex-row items-center gap-3 mb-4">
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, transition: { delay: 0.4, duration: 0.4 } }}
-            transition={{ delay: 0.9, duration: 0.8, ease: "easeOut" }}
-            className="text-[#82202B] font-display text-4xl sm:text-5xl font-semibold tracking-wide"
+        <div className="flex flex-col items-center mb-6">
+          {/* 1.8 - 2.8: Reveal JAWHAR */}
+          <div className="flex overflow-hidden">
+            {jawharLetters.map((letter, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, transition: { duration: 0.3 } }}
+                transition={{ 
+                  delay: 1.8 + (i * 0.1), // Staggered letter reveal
+                  duration: 0.8, 
+                  ease: "easeOut" 
+                }}
+                className="text-[#1A342B] font-display text-4xl sm:text-5xl font-normal tracking-[0.1em]"
+              >
+                {letter}
+              </motion.span>
+            ))}
+          </div>
+          
+          {/* 2.8 - 3.6: Reveal GROUP */}
+          <motion.h2
+            initial={{ opacity: 0, filter: "blur(4px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, transition: { duration: 0.3 } }}
+            transition={{ delay: 2.8, duration: 0.8, ease: "easeOut" }}
+            className="text-[#1A342B] font-display text-3xl sm:text-4xl font-normal tracking-wide mt-2"
           >
-            Jawhar
-          </motion.h1>
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, transition: { delay: 0.4, duration: 0.4 } }}
-            transition={{ delay: 1.25, duration: 0.8, ease: "easeOut" }}
-            className="text-[#82202B] font-display text-4xl sm:text-5xl font-semibold tracking-wide"
-          >
-            Group
-          </motion.h1>
+            GROUP
+          </motion.h2>
         </div>
 
-        {/* Divider */}
+        {/* 3.6 - 4.3: Divider and PERFECT WEDDING */}
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
-          exit={{ opacity: 0, transition: { delay: 0.3, duration: 0.3 } }}
-          transition={{ delay: 1.65, duration: 0.8, ease: "easeInOut" }}
-          className="h-[1px] w-full max-w-[240px] bg-[#B89A57] mb-6"
+          exit={{ opacity: 0, transition: { duration: 0.3 } }}
+          transition={{ delay: 3.6, duration: 0.7, ease: "easeInOut" }} // Animate from center outward
+          className="h-[1px] w-full max-w-[240px] bg-[#B89A57] mb-6 origin-center"
         />
 
-        {/* PERFECT WEDDING */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { delay: 0.3, duration: 0.3 } }}
-          transition={{ delay: 2.0, duration: 0.8 }}
-          className="text-[#1A342B] font-display text-xs sm:text-sm tracking-[0.4em] uppercase mb-4"
+          exit={{ opacity: 0, transition: { duration: 0.3 } }}
+          transition={{ delay: 3.8, duration: 0.5 }}
+          className="text-[#B89A57] font-display text-sm sm:text-base tracking-[0.4em] uppercase mb-5"
         >
           Perfect Wedding
         </motion.p>
 
-        {/* CREATING MEMORABLE CELEBRATIONS */}
+        {/* 4.3 - 5.2: CREATING MEMORABLE CELEBRATIONS */}
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { delay: 0.2, duration: 0.3 } }}
-          transition={{ delay: 2.35, duration: 0.8 }}
-          className="text-[#1A342B]/80 text-[0.55rem] sm:text-[0.6rem] tracking-[0.3em] uppercase mb-8 text-center max-w-[280px]"
+          initial={{ opacity: 0, y: 15 }} // Fade upward 15px
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, transition: { duration: 0.3 } }}
+          transition={{ delay: 4.3, duration: 0.9, ease: "easeOut" }}
+          className="text-[#1A342B]/80 text-[0.65rem] sm:text-[0.7rem] tracking-[0.3em] uppercase mb-10 text-center max-w-[320px]"
         >
           Creating Memorable Celebrations
         </motion.p>
 
-        {/* Gold Loading Line */}
+        {/* 5.2 - 6.2: Loading Line */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { delay: 0.1, duration: 0.3 } }}
-          transition={{ delay: 2.7, duration: 0.8 }}
-          className="w-[120px] h-[1px] bg-[#1A342B]/10 relative overflow-hidden mb-3"
+          exit={{ opacity: 0, transition: { duration: 0.3 } }}
+          transition={{ delay: 5.2, duration: 1.0 }}
+          className="w-[180px] h-[1px] bg-[#B89A57]/20 relative overflow-hidden mb-4"
         >
           <motion.div
             initial={{ x: "-100%" }}
             animate={{ x: "100%" }}
             transition={{ 
-              delay: 3.0, 
-              duration: 1.5, 
+              delay: 5.2, 
+              duration: 2.0, 
               repeat: Infinity, 
               ease: "easeInOut" 
             }}
-            className="absolute inset-0 w-1/2 h-full bg-[#B89A57]"
+            className="absolute inset-0 w-1/4 h-full bg-gradient-to-r from-transparent via-[#F8F5ED] to-transparent shadow-[0_0_8px_#F8F5ED]" // glowing point effect
           />
         </motion.div>
 
-        {/* LOADING... text */}
+        {/* 6.2 - 7.0: LOADING... */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { delay: 0, duration: 0.3 } }}
-          transition={{ delay: 3.0, duration: 0.5 }}
-          className="flex items-center gap-2"
+          exit={{ opacity: 0, transition: { duration: 0.3 } }}
+          transition={{ delay: 6.2, duration: 0.8 }}
+          className="flex items-center gap-3"
         >
-          <div className="w-2.5 h-2.5 rounded-full border border-[#B89A57] border-t-transparent animate-spin" />
-          <span className="text-[#1A342B]/70 text-[0.5rem] tracking-[0.2em] uppercase">
+          <div className="w-3 h-3 rounded-full border-[1.5px] border-[#B89A57]/30 border-t-[#B89A57] animate-spin" />
+          <span className="text-[#B89A57] text-[0.55rem] tracking-[0.25em] uppercase">
             Loading...
           </span>
         </motion.div>
@@ -195,3 +197,4 @@ export function JawharLoadingScreen({ onComplete }: JawharLoadingScreenProps) {
     </motion.div>
   );
 }
+

@@ -125,14 +125,11 @@ function RootComponent() {
   const [showApp, setShowApp] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem('jawhar-loaded')) {
-      setIsFirstLoad(false);
-      setShowApp(true);
-    }
+    // We intentionally removed the sessionStorage check here
+    // so the cinematic loader plays on every refresh for demonstration purposes.
   }, []);
 
   const handleLoaderComplete = () => {
-    sessionStorage.setItem('jawhar-loaded', 'true');
     setShowApp(true);
   };
 
