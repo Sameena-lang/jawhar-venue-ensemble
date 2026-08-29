@@ -7,11 +7,13 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader, SiteFooter } from "../components/SiteChrome";
+import { JawharLoadingScreen } from "../components/Loader";
 
 function NotFoundComponent() {
   return (
@@ -119,13 +121,52 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [showApp, setShowApp] = useState(false);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('jawhar-loaded')) {
+      setIsFirstLoad(false);
+      setShowApp(true);
+    }
+  }, []);
+
+  const handleLoaderComplete = () => {
+    sessionStorage.setItem('jawhar-loaded', 'true');
+    setShowApp(true);
+  };
+
+  if (!isFirstLoad) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <SiteHeader />
+        <Outlet />
+        <SiteFooter />
+      </QueryClientProvider>
+    );
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SiteHeader />
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
-      <SiteFooter />
+      <AnimatePresence>
+        {!showApp && <JawharLoadingScreen onComplete={handleLoaderComplete} />}
+      </AnimatePresence>
+      
+      {showApp && (
+        <motion.div
+          initial={{ opacity: 0, scale: 1.02, filter: "blur(4px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="min-h-screen flex flex-col"
+        >
+          <SiteHeader />
+          <main className="flex-grow">
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </main>
+          <SiteFooter />
+        </motion.div>
+      )}
     </QueryClientProvider>
   );
 }
